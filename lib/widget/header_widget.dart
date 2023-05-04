@@ -32,7 +32,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     List<Placemark> placemark = await placemarkFromCoordinates(lat, lon);
     Placemark place = placemark[0];
     setState(() {
-      city = place.country!;
+      city = place.locality!;
     });
   }
 

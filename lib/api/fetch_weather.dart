@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weather_application/model/weather_data.dart';
 import 'package:weather_application/model/weather_data_current.dart';
+import 'package:weather_application/model/weather_data_hourly.dart';
 
 import '../utils/api_url.dart';
 
@@ -23,6 +24,7 @@ class FetchWeatherAPI {
     var jsonString = jsonDecode(response.body);
     weatherData = WeatherData(
       WeatherDataCurrent.fromjson(jsonString),
+      WeatherDataHourly.fromjson(jsonString),
     );
     return weatherData!;
   }

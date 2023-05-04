@@ -12,6 +12,10 @@ class CurrentWeatherWidget extends StatelessWidget {
       children: [
         //Temperature area
         temeratureAreaWidget(),
+
+        const SizedBox(
+          height: 20,
+        ),
         //more details
         currentWeatherMoreDetailsWidget(),
       ],
@@ -20,6 +24,7 @@ class CurrentWeatherWidget extends StatelessWidget {
 
   Widget temeratureAreaWidget() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Image.asset(
           'assets/weather/${weatherDataCurrent.current.weather![0].icon}.png',
@@ -31,11 +36,82 @@ class CurrentWeatherWidget extends StatelessWidget {
           width: 1,
           color: CustomColors.dividerLine,
         ),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '${weatherDataCurrent.current.temp}°',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 68,
+                  color: CustomColors.textColorBlack,
+                ),
+              ),
+              TextSpan(
+                text: '${weatherDataCurrent.current.weather![0].description}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
   Widget currentWeatherMoreDetailsWidget() {
-    return Container();
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            moreDetailsCard('assets/icons/windspeed.png'),
+            moreDetailsCard('assets/icons/clouds.png'),
+            moreDetailsCard('assets/icons/humidity.png'),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            moreDetailsCardTitle('${weatherDataCurrent.current.windSpeed}KM/H'),
+            moreDetailsCardTitle('${weatherDataCurrent.current.clouds}%'),
+            moreDetailsCardTitle('${weatherDataCurrent.current.humidity}%'),
+          ],
+        )
+      ],
+    );
+  }
+
+  SizedBox moreDetailsCardTitle(String title) {
+    return SizedBox(
+      height: 20,
+      width: 60,
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
+
+  Container moreDetailsCard(String image) {
+    return Container(
+      height: 60,
+      width: 60,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: CustomColors.cardColor,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Image.asset(image),
+    );
   }
 }
