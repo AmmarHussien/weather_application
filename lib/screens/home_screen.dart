@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_application/controller/global_controller.dart';
+import 'package:weather_application/utils/custom_colors.dart';
+import 'package:weather_application/widget/comfort_level.dart';
 import 'package:weather_application/widget/header_widget.dart';
 
 import '../widget/current_weather_widget.dart';
@@ -26,8 +28,22 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Obx(
           () => globalController.checkLoading().isTrue
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icons/clouds.png',
+                        height: 200,
+                        width: 200,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const CircularProgressIndicator(),
+                    ],
+                  ),
                 )
               : Center(
                   child: ListView(
@@ -43,12 +59,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             globalController.getData().getCurrentWeather(),
                       ),
                       HourlyWeatherWidget(
-                        weatherDataHourly: globalController.getData().getHourlyWeather(),
+                        weatherDataHourly:
+                            globalController.getData().getHourlyWeather(),
                       ),
-                       DailyDataForecastWidget(
-                        weatherDataDaily: globalController.getData().getDailyWeather(),
-                      )
-
+                      DailyDataForecastWidget(
+                        weatherDataDaily:
+                            globalController.getData().getDailyWeather(),
+                      ),
+                      Container(
+                        height: 1,
+                        color: CustomColors.dividerLine,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ComfortLevel(
+                        weatherDataCurrent:
+                            globalController.getData().getCurrentWeather(),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
